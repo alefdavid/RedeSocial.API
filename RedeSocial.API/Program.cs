@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen(opt =>
         Contact = new OpenApiContact
         {
             Name = "Alef David, Caio Gaspar, Henrique Pereira, Wesley Silva",
-            Url = new Uri("https://github.com/henriqueapereira/RedeSocial.API")
+            Url = new Uri("https://github.com/alefdavid/RedeSocial.API")
         }
     });
 });

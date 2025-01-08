@@ -1,0 +1,19 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using RedeSocial.Domain;
+using RedeSocial.Domain.Interfaces.Repositories;
+using RedeSocial.Infrastructure.Repositories;
+
+namespace RedeSocial.Infrastructure
+{
+    public static class DependencyInfrastrutureRegister
+    {
+        public static IServiceCollection RegisterInfrastrutureDependencies(this IServiceCollection services)
+        {
+            // Repositories
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+           
+            return services;
+        }
+    }
+}

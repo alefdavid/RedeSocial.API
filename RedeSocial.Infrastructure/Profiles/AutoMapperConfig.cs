@@ -9,7 +9,7 @@ namespace RedeSocial.Infrastructure.Profiles
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UsuarioProfile());
-
+                cfg.AddProfile(new PublicacaoProfile());
             });
 
             return config.CreateMapper();

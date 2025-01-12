@@ -13,8 +13,8 @@ namespace RedeSocial.Infrastructure.Context
         public DbSet<Amizade> Amizades { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
         public DbSet<Curtida> Curtidas { get; set; }
-        public DbSet<Notificacao> Notificacaos { get; set; }
-        public DbSet<Publicacao> Publicacaos { get; set; }
+        public DbSet<Notificacao> Notificacoes { get; set; }
+        public DbSet<Publicacao> Publicacoes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

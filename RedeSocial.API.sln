@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedeSocial.Domain", "RedeSo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedeSocial.Application", "RedeSocial.Application\RedeSocial.Application.csproj", "{93EA5D8B-DAAB-4E98-AC04-14D9E98633D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedeSocial.API", "RedeSocial.API\RedeSocial.API.csproj", "{256E9311-EC41-43E4-8731-29E05F2F86C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedeSocial.API", "RedeSocial.API\RedeSocial.API.csproj", "{256E9311-EC41-43E4-8731-29E05F2F86C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

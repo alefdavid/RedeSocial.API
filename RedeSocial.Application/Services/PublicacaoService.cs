@@ -149,7 +149,7 @@ namespace RedeSocial.Application.Services
         {
             if (id <= 0) throw new ArgumentException("Id inválido");
 
-            var comentario = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+            var comentario = await _repositoryManager.ComentarioRepository.GetComentarioById(id);
 
             if (comentario == null)
             {
@@ -168,12 +168,12 @@ namespace RedeSocial.Application.Services
                 throw new ArgumentException(nameof(comentarioDTO));
             }
 
-            var comentario = _mapper.Map<Publicacao>(comentarioDTO);
+            var comentario = _mapper.Map<Comentario>(comentarioDTO);
 
             comentario.DataCriacao = DateTime.Now;
             comentario.FlAtivo = true;
 
-            _repositoryManager.PublicacaoRepository.Add(comentario);
+            _repositoryManager.ComentarioRepository.Add(comentario);
             await _repositoryManager.Save();
 
             return _mapper.Map<ComentarioDTO>(comentario);
@@ -186,7 +186,7 @@ namespace RedeSocial.Application.Services
                 throw new ArgumentException(nameof(comentarioDTO));
             }
 
-            var comentarioExistente = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+            var comentarioExistente = await _repositoryManager.ComentarioRepository.GetComentarioById(id);
 
             if (comentarioExistente == null)
             {
@@ -196,10 +196,10 @@ namespace RedeSocial.Application.Services
             _mapper.Map(comentarioDTO, comentarioExistente);
             comentarioExistente.DataAlteracao = DateTime.Now;
 
-            _repositoryManager.PublicacaoRepository.Put(comentarioExistente);
+            _repositoryManager.ComentarioRepository.Put(comentarioExistente);
             await _repositoryManager.Save();
 
-            return true;
+            return _mapper.Map<ComentarioDTO>(comentarioExistente);
         }
 
         public async Task<bool> DeleteComentario(int id)
@@ -209,41 +209,58 @@ namespace RedeSocial.Application.Services
                 throw new ArgumentException("ID inválido");
             }
 
-            var comentario = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+            var comentario = await _repositoryManager.ComentarioRepository.GetComentarioById(id);
 
             if (comentario == null)
             {
-                throw new Exception("Publicação não encontrada");
+                throw new Exception("Comentário não encontrado");
             }
 
             comentario.FlAtivo = false;
             comentario.DataAlteracao = DateTime.Now;
 
-            _repositoryManager.PublicacaoRepository.Put(comentario);
+            _repositoryManager.ComentarioRepository.Put(comentario);
             await _repositoryManager.Save();
 
             return true;
         }
 
+
         public async Task<CurtidaDTO> GetCurtidaById(int id)
         {
             if (id <= 0) throw new ArgumentException("Id inválido");
 
-            var curtida = await _repositoryManager.PublicacaoRepository.GetCurtidaById(id);
+            var curtida = await _repositoryManager.CurtidaRepository.GetCurtidaById(id);
 
             if (curtida == null)
             {
-                throw new Exception("Comentário não encontrado");
+                throw new Exception("Curtida não encontrada");
             }
 
             var curtidaDTO = _mapper.Map<CurtidaDTO>(curtida);
 
             return curtidaDTO;
         }
-
-        public Task<CurtidaDTO> GetCurtidasByPublicacao(int publicacaoId)
+                
+        public async Task<CurtidasPublicacaoDTO> GetCurtidasByPublicacao(int publicacaoId)
         {
-            throw new NotImplementedException();
+            if (publicacaoId <= 0)
+            {
+                throw new ArgumentException("ID da publicação inválido");
+            }
+
+            var curtidas = await _repositoryManager.CurtidaRepository.GetCurtidasByPublicacao(publicacaoId);
+
+            if (curtidas == null)
+            {
+                throw new Exception("Publicação não encontrada ou sem curtidas");
+            }
+
+            return new CurtidasPublicacaoDTO
+            {
+                Publicacao = _mapper.Map<PublicacaoDTO>(curtidas.PublicacaoId),
+                Curtidas = _mapper.Map<List<CurtidaDTO>>(curtidas)
+            };
         }
 
         public async Task<CurtidaDTO> PostCurtida(CurtidaDTO curtidaDTO)
@@ -268,5 +285,7 @@ namespace RedeSocial.Application.Services
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

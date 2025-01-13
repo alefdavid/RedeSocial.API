@@ -9,6 +9,12 @@ namespace RedeSocial.Infrastructure.Profiles
         public PublicacaoProfile()
         {
             CreateMap<Publicacao, PublicacaoDTO>().ReverseMap();
+            CreateMap<Publicacao, PublicacoesUsuarioDTO>().ReverseMap();
+
+            CreateMap<Comentario, ComentarioDTO>().ReverseMap();
+
+            CreateMap<Curtida, CurtidaDTO>().ReverseMap();
+            CreateMap<Curtida, CurtidasPublicacaoDTO>().ReverseMap();
         }        
     }
 }

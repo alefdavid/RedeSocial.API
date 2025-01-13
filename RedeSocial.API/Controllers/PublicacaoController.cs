@@ -105,5 +105,76 @@ namespace RedeSocial.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id}/curtida")]
+        public async Task<IActionResult> PostCurtida(int id, [FromBody] CurtidaDTO curtidaDTO)
+        {
+            curtidaDTO.PublicacaoId = id;
+            var curtidaCriada = await _publicacaoService.PostCurtida(curtidaDTO);
+
+            if (curtidaCriada == null)
+            {
+                return BadRequest("Erro ao adicionar curtida.");
+            }
+
+            return Ok(curtidaCriada);
+        }
+
+        [HttpDelete("{id}/curtida/{curtidaId}")]
+        public async Task<IActionResult> DeleteCurtida(int curtidaId)
+        {
+            var result = await _publicacaoService.DeleteCurtida(curtidaId);
+
+            if (!result)
+            {
+                return NotFound("Curtida não encontrada ou erro ao removê-la.");
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("{id}/comentario")]
+        public async Task<IActionResult> PostComentario(int id, [FromBody] ComentarioDTO comentarioDTO)
+        {
+            comentarioDTO.PublicacaoId = id;
+            var comentarioCriado = await _publicacaoService.PostComentario(comentarioDTO);
+
+            if (comentarioCriado == null)
+            {
+                return BadRequest("Erro ao adicionar comentário.");
+            }
+
+            return Ok(comentarioCriado);
+        }
+
+        [HttpPut("{id}/comentario/{comentarioId}")]
+        public async Task<IActionResult> PutComentario(int id, ComentarioDTO comentarioDTO)
+        {
+            var buscaComentario = await _publicacaoService.GetComentarioById(id);
+
+            if (buscaComentario == null)
+            {
+                return NotFound();
+            }
+
+            var comentarioAtualizadoDTO = _mapper.Map<ComentarioDTO>(comentarioDTO);
+
+            var retornoComentario = await _publicacaoService.PutComentario(comentarioAtualizadoDTO, id);
+
+            return Ok(retornoComentario);
+        }
+
+        [HttpDelete("{id}/comentario/{comentarioId}")]
+        public async Task<IActionResult> DeleteComentario(int id)
+        {
+            var comentario = await _publicacaoService.DeleteComentario(id);
+
+            if (comentario == null)
+            {
+                return NotFound("Comentário não encontrado ou erro ao removê-lo.");
+            }
+
+            return NoContent();
+        }
     }
 }

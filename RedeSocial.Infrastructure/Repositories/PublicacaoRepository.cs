@@ -8,30 +8,31 @@ namespace RedeSocial.Infrastructure.Repositories
     public class PublicacaoRepository : Repository<Publicacao>, IPublicacaoRepository
     {
         public PublicacaoRepository(RedeSocialDbContext context) : base(context) { }
+        
 
         public async Task<Comentario> GetComentarioById(int id)
+        {
+            return await _context.Comentarios.Where(x => x.Id == id && x.FlAtivo).FirstOrDefaultAsync();
+        }
+
+        public async Task<Curtida> GetCurtidaById(int id)
+        {
+            return await _context.Curtidas.Where(x => x.Id == id && x.FlAtivo).FirstOrDefaultAsync();
+        }
+
+        public async Task<Curtida> GetCurtidasByPublicacao(int publicacaoId)
+        {
+            return await _context.Curtidas.FirstOrDefaultAsync(c => c.PublicacaoId == publicacaoId && c.FlAtivo);
+        }
+
+        public async Task<Publicacao> GetPublicacaoById(int id)
         {
             return await _context.Publicacoes.Where(x => x.Id == id && x.FlAtivo).FirstOrDefaultAsync();
         }
 
-        public Task<Curtida> GetCurtidaById(int id)
+        public async Task<Publicacao> GetPublicacoesByUsuario(int usuarioId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Curtida> GetCurtidaByPublicacao(int publicacaoId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Publicacao> GetPublicacaoById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Publicacao> GetPublicacoesByUsuario(int usuarioId)
-        {
-            throw new NotImplementedException();
+            return await _context.Publicacoes.FirstOrDefaultAsync(p => p.UsuarioId == usuarioId && p.FlAtivo);
         }
     }
 }

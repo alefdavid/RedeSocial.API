@@ -6,6 +6,8 @@ namespace RedeSocial.Domain
     {
         IUsuarioRepository UsuarioRepository { get; }
         IPublicacaoRepository PublicacaoRepository { get; }
+        IComentarioRepository ComentarioRepository { get; }
+        ICurtidaRepository CurtidaRepository { get; }
 
         Task Save();
     }

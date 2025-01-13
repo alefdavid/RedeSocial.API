@@ -142,5 +142,131 @@ namespace RedeSocial.Application.Services
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        //Comentario e Curtida
+
+        public async Task<ComentarioDTO> GetComentarioById(int id)
+        {
+            if (id <= 0) throw new ArgumentException("Id inválido");
+
+            var comentario = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+
+            if (comentario == null)
+            {
+                throw new Exception("Comentário não encontrado");
+            }
+
+            var comentarioDTO = _mapper.Map<ComentarioDTO>(comentario);
+
+            return comentarioDTO;
+        }
+
+        public async Task<ComentarioDTO> PostComentario(ComentarioDTO comentarioDTO)
+        {
+            if (comentarioDTO == null)
+            {
+                throw new ArgumentException(nameof(comentarioDTO));
+            }
+
+            var comentario = _mapper.Map<Publicacao>(comentarioDTO);
+
+            comentario.DataCriacao = DateTime.Now;
+            comentario.FlAtivo = true;
+
+            _repositoryManager.PublicacaoRepository.Add(comentario);
+            await _repositoryManager.Save();
+
+            return _mapper.Map<ComentarioDTO>(comentario);
+        }
+
+        public async Task<ComentarioDTO> PutComentario(ComentarioDTO comentarioDTO, int id)
+        {
+            if (comentarioDTO == null)
+            {
+                throw new ArgumentException(nameof(comentarioDTO));
+            }
+
+            var comentarioExistente = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+
+            if (comentarioExistente == null)
+            {
+                throw new Exception("Comentário não encontrado");
+            }
+
+            _mapper.Map(comentarioDTO, comentarioExistente);
+            comentarioExistente.DataAlteracao = DateTime.Now;
+
+            _repositoryManager.PublicacaoRepository.Put(comentarioExistente);
+            await _repositoryManager.Save();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteComentario(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("ID inválido");
+            }
+
+            var comentario = await _repositoryManager.PublicacaoRepository.GetComentarioById(id);
+
+            if (comentario == null)
+            {
+                throw new Exception("Publicação não encontrada");
+            }
+
+            comentario.FlAtivo = false;
+            comentario.DataAlteracao = DateTime.Now;
+
+            _repositoryManager.PublicacaoRepository.Put(comentario);
+            await _repositoryManager.Save();
+
+            return true;
+        }
+
+        public async Task<CurtidaDTO> GetCurtidaById(int id)
+        {
+            if (id <= 0) throw new ArgumentException("Id inválido");
+
+            var curtida = await _repositoryManager.PublicacaoRepository.GetCurtidaById(id);
+
+            if (curtida == null)
+            {
+                throw new Exception("Comentário não encontrado");
+            }
+
+            var curtidaDTO = _mapper.Map<CurtidaDTO>(curtida);
+
+            return curtidaDTO;
+        }
+
+        public Task<CurtidaDTO> GetCurtidasByPublicacao(int publicacaoId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<CurtidaDTO> PostCurtida(CurtidaDTO curtidaDTO)
+        {
+            if (curtidaDTO == null)
+            {
+                throw new ArgumentException(nameof(curtidaDTO));
+            }
+
+            var curtida = _mapper.Map<Publicacao>(curtidaDTO);
+
+            curtida.DataCriacao = DateTime.Now;
+            curtida.FlAtivo = true;
+
+            _repositoryManager.PublicacaoRepository.Add(curtida);
+            await _repositoryManager.Save();
+
+            return _mapper.Map<CurtidaDTO>(curtida);
+        }
+
+        public Task<bool> DeleteCurtida(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

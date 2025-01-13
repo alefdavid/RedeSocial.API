@@ -7,5 +7,10 @@ namespace RedeSocial.Domain.Interfaces.Repositories
     {
         Task<Publicacao> GetPublicacoesByUsuario(int usuarioId);
         Task<Publicacao> GetPublicacaoById(int id);
+
+        Task<Comentario> GetComentarioById(int id);
+        
+        Task<Curtida> GetCurtidaById(int id);
+        Task<Curtida> GetCurtidaByPublicacao(int publicacaoId);
     }        
 }

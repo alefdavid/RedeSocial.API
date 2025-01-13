@@ -9,5 +9,15 @@ namespace RedeSocial.Domain.Interfaces.Services
         Task<PublicacaoDTO> Post(PublicacaoDTO publicacaoDTO);
         Task<bool> Put(PublicacaoDTO publicacaoDTO, int id);        
         Task<bool> Delete(int id);
+
+        Task<ComentarioDTO> GetComentarioById(int id);
+        Task<ComentarioDTO> PostComentario(ComentarioDTO comentarioDTO);
+        Task<ComentarioDTO> PutComentario(ComentarioDTO comentarioDTO);
+        Task<bool> DeleteComentario(int id);
+
+        Task<CurtidaDTO> GetCurtidaById(int id);
+        Task<CurtidaDTO> GetCurtidasByPublicacao(int publicacaoId);
+        Task<CurtidaDTO> PostCurtida(CurtidaDTO curtidaDTO);
+        Task<bool> DeleteCurtida(int id);
     }
 }

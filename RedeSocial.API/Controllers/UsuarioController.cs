@@ -2,9 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RedeSocial.Domain.DTOs;
-using RedeSocial.Domain.Entities;
 using RedeSocial.Domain.Interfaces.Services;
-using RedeSocial.Infrastructure.Context;
 
 namespace RedeSocial.API.Controllers
 {

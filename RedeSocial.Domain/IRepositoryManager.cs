@@ -5,6 +5,9 @@ namespace RedeSocial.Domain
     public interface IRepositoryManager : IDisposable
     {
         IUsuarioRepository UsuarioRepository { get; }
+        IPublicacaoRepository PublicacaoRepository { get; }
+        IComentarioRepository ComentarioRepository { get; }
+        ICurtidaRepository CurtidaRepository { get; }
 
         Task Save();
     }

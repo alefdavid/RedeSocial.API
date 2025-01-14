@@ -12,6 +12,11 @@ namespace RedeSocial.Infrastructure
 
         public IUsuarioRepository UsuarioRepository { get; }
 
+        public IPublicacaoRepository PublicacaoRepository { get; }
+
+        public IComentarioRepository ComentarioRepository { get; }
+
+        public ICurtidaRepository CurtidaRepository { get; }
 
         public RepositoryManager(RedeSocialDbContext redeSocialDbContext,
                                 IUsuarioRepository usuarioRepository

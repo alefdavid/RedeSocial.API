@@ -25,7 +25,14 @@ builder.Services.AddSwaggerGen(opt =>
 
 // Context
 var connectionString = builder.Configuration.GetConnectionString("DBRedeSocial");
-builder.Services.AddDbContext<RedeSocialDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<RedeSocialDbContext>(options =>
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    }));
 
 // Dependencies
 builder.Services.RegisterApplicationDependencies();

@@ -1,6 +1,4 @@
-﻿using RedeSocial.Application.Interfaces.Repositories;
-using RedeSocial.Domain.Entities;
-using System.Linq.Expressions;
+﻿using RedeSocial.Domain.Entities;
 
 namespace RedeSocial.Domain.Interfaces.Repositories
 {

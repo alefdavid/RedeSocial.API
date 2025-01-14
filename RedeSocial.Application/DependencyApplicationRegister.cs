@@ -10,6 +10,7 @@ namespace RedeSocial.Application
         {
             services.AddTransient<IUsuarioService, UsuarioService>();
 
+            services.AddTransient<IAmizadeService, AmizadeService>();
 
             return services;
         }

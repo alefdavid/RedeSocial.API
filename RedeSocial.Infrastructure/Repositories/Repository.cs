@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RedeSocial.Application.Interfaces.Repositories;
 using RedeSocial.Domain.Entities;
+using RedeSocial.Domain.Interfaces.Repositories;
 using RedeSocial.Infrastructure.Context;
 
 namespace RedeSocial.Infrastructure.Repositories
@@ -18,6 +18,7 @@ namespace RedeSocial.Infrastructure.Repositories
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
+            entity.DataCriacao = DateTime.Now;
         }
 
         public void Put(T entity)
@@ -27,7 +28,7 @@ namespace RedeSocial.Infrastructure.Repositories
 
         public async Task<T> GetById(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<bool> Delete(int id)
@@ -58,6 +59,11 @@ namespace RedeSocial.Infrastructure.Repositories
 
                 disposed = true;
             }
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
         ~Repository()

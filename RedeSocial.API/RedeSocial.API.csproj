@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RedeSocial.Application\RedeSocial.Application.csproj" />
+    <ProjectReference Include="..\RedeSocial.Domain\RedeSocial.Domain.csproj" />
     <ProjectReference Include="..\RedeSocial.Infrastructure\RedeSocial.Infrastructure.csproj" />
   </ItemGroup>
 

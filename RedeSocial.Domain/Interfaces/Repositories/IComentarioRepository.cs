@@ -1,5 +1,4 @@
-﻿using RedeSocial.Application.Interfaces.Repositories;
-using RedeSocial.Domain.Entities;
+﻿using RedeSocial.Domain.Entities;
 
 namespace RedeSocial.Domain.Interfaces.Repositories
 {

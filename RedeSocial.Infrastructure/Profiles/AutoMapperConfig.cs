@@ -10,9 +10,10 @@ namespace RedeSocial.Infrastructure.Profiles
             {
                 cfg.AddProfile(new UsuarioProfile());
                 cfg.AddProfile(new PublicacaoProfile());
+                cfg.AddProfile(new AmizadeProfile());
             });
 
             return config.CreateMapper();
         }
-    } 
+    }
 }

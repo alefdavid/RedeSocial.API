@@ -1,6 +1,6 @@
 ﻿using RedeSocial.Domain.Entities;
 
-namespace RedeSocial.Application.Interfaces.Repositories
+namespace RedeSocial.Domain.Interfaces.Repositories
 {
     public interface IRepository<T> : IDisposable where T : Entity, new()
     {

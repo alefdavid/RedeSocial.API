@@ -12,7 +12,8 @@ namespace RedeSocial.Infrastructure
             // Repositories
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-           
+            services.AddScoped<IAmizadeRepository, AmizadeRepository>();
+
             return services;
         }
     }

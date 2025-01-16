@@ -12,6 +12,12 @@ namespace RedeSocial.Application
 
             services.AddTransient<IAmizadeService, AmizadeService>();
 
+            services.AddTransient<IAmizadeService, AmizadeService>();
+
+            services.AddTransient<IPublicacaoService, PublicacaoService>();
+
+            services.AddTransient<IAutorizacaoService, AutorizacaoService>();           
+
             return services;
         }
     }

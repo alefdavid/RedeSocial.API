@@ -18,13 +18,21 @@ namespace RedeSocial.Infrastructure
 
         public ICurtidaRepository CurtidaRepository { get; }
 
+        public IAutorizacaoRepository AutorizacaoRepository { get; }
+
         public RepositoryManager(RedeSocialDbContext redeSocialDbContext,
-                                IUsuarioRepository usuarioRepository
-                                
-                                )
+                                IUsuarioRepository usuarioRepository,
+                                IPublicacaoRepository publicacaoRepository,
+                                IComentarioRepository comentarioRepository,
+                                ICurtidaRepository curtidaRepository,
+                                IAutorizacaoRepository autorizacaoRepository)                              
         {
             this.dbContext = redeSocialDbContext;
             UsuarioRepository = usuarioRepository;
+            PublicacaoRepository = publicacaoRepository;
+            ComentarioRepository = comentarioRepository;
+            CurtidaRepository = curtidaRepository;
+            AutorizacaoRepository = autorizacaoRepository;
         }
 
         public async Task Save()
@@ -40,7 +48,13 @@ namespace RedeSocial.Infrastructure
                 {
                     dbContext.Dispose();
                     UsuarioRepository.Dispose();
-                   
+                    PublicacaoRepository.Dispose();
+                    ComentarioRepository.Dispose();
+                    CurtidaRepository.Dispose();
+                    if (AutorizacaoRepository is IDisposable disposableAutorizacaoRepository)
+                    {
+                        disposableAutorizacaoRepository.Dispose();
+                    }
                 }
                 disposed = true;
             }

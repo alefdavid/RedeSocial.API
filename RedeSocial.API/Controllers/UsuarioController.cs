@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RedeSocial.Domain.DTOs;
@@ -22,6 +23,7 @@ namespace RedeSocial.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrador, Usuario")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -40,6 +42,7 @@ namespace RedeSocial.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrador, Usuario")]
         public async Task<IActionResult> GetAll(string? nome)
         {
             try
@@ -58,6 +61,7 @@ namespace RedeSocial.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] UsuarioDTO usuarioDTO)
         {
             try
@@ -89,6 +93,7 @@ namespace RedeSocial.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador, Usuario")]
         public async Task<IActionResult> Put(UsuarioDTO usuarioDTO, int id)
         {
             try
@@ -115,6 +120,7 @@ namespace RedeSocial.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador, Usuario")] 
         public async Task<IActionResult> Delete(int id)
         {
             try

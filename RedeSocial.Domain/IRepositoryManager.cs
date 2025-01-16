@@ -8,6 +8,7 @@ namespace RedeSocial.Domain
         IPublicacaoRepository PublicacaoRepository { get; }
         IComentarioRepository ComentarioRepository { get; }
         ICurtidaRepository CurtidaRepository { get; }
+        IAutorizacaoRepository AutorizacaoRepository { get; }
 
         Task Save();
     }

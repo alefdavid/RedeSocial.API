@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RedeSocial.Infrastructure.Context;
-using RedeSocial.Infrastructure;
 using RedeSocial.Application;
+using RedeSocial.Infrastructure;
+using RedeSocial.Infrastructure.Context;
 using RedeSocial.Infrastructure.Profiles;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,18 +24,52 @@ builder.Services.AddSwaggerGen(opt =>
             Url = new Uri("https://github.com/alefdavid/RedeSocial.API")
         }
     });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header usando o esquema Bearer."
+    });
+
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+        }
+    });
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey
+    (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
 });
 
 // Context
 var connectionString = builder.Configuration.GetConnectionString("DBRedeSocial");
-builder.Services.AddDbContext<RedeSocialDbContext>(options =>
-    options.UseSqlServer(connectionString, sqlOptions =>
-    {
-        sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null);
-    }));
+builder.Services.AddDbContext<RedeSocialDbContext>(options => options.UseSqlServer(connectionString));
 
 // Dependencies
 builder.Services.RegisterApplicationDependencies();
